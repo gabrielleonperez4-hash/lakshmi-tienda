@@ -49,7 +49,7 @@ export default function Header() {
         </div>
 
         <Link href="/" className="brand">
-          Lakshmi <small>India · Tailandia</small>
+          Lakshmi
         </Link>
 
         <nav className="nav-links">
