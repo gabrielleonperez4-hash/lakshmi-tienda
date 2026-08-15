@@ -25,7 +25,7 @@ export default function Header() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}
           >
-            <span className="menu-icon">☰</span> Menú
+            <span className="menu-icon">☰</span> Menu
           </button>
           {menuOpen && (
             <>
