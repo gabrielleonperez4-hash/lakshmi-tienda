@@ -56,6 +56,37 @@ const paths = {
       <path d="M52 26c2 4-2 5 0 9M60 24c2 4-2 5 0 9M68 26c2 4-2 5 0 9" stroke="var(--indigo)" strokeWidth="2" strokeLinecap="round" opacity=".4" />
     </>
   ),
+  candle: (
+    <>
+      <rect x="44" y="46" width="32" height="52" rx="3" fill="var(--marigold)" fillOpacity=".22" stroke="var(--brass)" strokeWidth="2.5" />
+      <line x1="44" y1="62" x2="76" y2="62" stroke="var(--brass)" strokeWidth="1.5" opacity=".5" />
+      <line x1="44" y1="78" x2="76" y2="78" stroke="var(--brass)" strokeWidth="1.5" opacity=".5" />
+      <path d="M60 30c-6 8 2 10 0 16" stroke="var(--marigold-deep)" strokeWidth="2" strokeLinecap="round" opacity=".7" />
+      <ellipse cx="60" cy="40" rx="4" ry="6" fill="var(--marigold)" />
+    </>
+  ),
+  dreamcatcher: (
+    <>
+      <circle cx="60" cy="46" r="26" stroke="var(--brass)" strokeWidth="2.5" fill="none" />
+      <path d="M40 32a26 26 0 0040-4M36 52a26 26 0 0048 8M40 62a26 26 0 0040 6" stroke="var(--indigo)" strokeWidth="1.2" opacity=".4" fill="none" />
+      <path d="M46 70l-6 24M60 72l0 26M74 70l6 24" stroke="var(--brass)" strokeWidth="1.5" strokeLinecap="round" opacity=".7" />
+      <circle cx="40" cy="94" r="3" fill="var(--marigold)" /><circle cx="60" cy="98" r="3" fill="var(--marigold)" /><circle cx="80" cy="94" r="3" fill="var(--marigold)" />
+    </>
+  ),
+  crystal: (
+    <>
+      <path d="M60 18l20 26-20 58-20-58z" fill="var(--marigold)" fillOpacity=".2" stroke="var(--brass)" strokeWidth="2.5" strokeLinejoin="round" />
+      <path d="M40 44h40M60 18v84" stroke="var(--indigo)" strokeWidth="1.2" opacity=".35" />
+    </>
+  ),
+  cards: (
+    <>
+      <rect x="36" y="30" width="34" height="52" rx="4" transform="rotate(-8 53 56)" fill="var(--paper)" stroke="var(--brass)" strokeWidth="2" />
+      <rect x="50" y="34" width="34" height="52" rx="4" fill="var(--marigold)" fillOpacity=".18" stroke="var(--brass)" strokeWidth="2.5" />
+      <circle cx="67" cy="60" r="10" stroke="var(--indigo)" strokeWidth="1.5" opacity=".5" fill="none" />
+      <line x1="67" y1="50" x2="67" y2="70" stroke="var(--indigo)" strokeWidth="1.2" opacity=".4" />
+    </>
+  ),
 };
 
 export default function ProductIcon({ icon, className }) {

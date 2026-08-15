@@ -20,7 +20,9 @@ export async function getStaticProps({ params }) {
 export default function ProductPage({ product }) {
   const { addItem } = useCart();
   const router = useRouter();
+  const hasPrice = typeof product.price === "number";
   const outOfStock = product.stock === 0;
+  const disabled = outOfStock || !hasPrice;
 
   function handleAdd() {
     addItem(product, 1);
@@ -48,10 +50,10 @@ export default function ProductPage({ product }) {
         <div>
           <span className="card-origin">{product.origin}</span>
           <h1>{product.name}</h1>
-          <div className="price">{product.price.toFixed(2)} €</div>
+          <div className="price">{hasPrice ? `${product.price.toFixed(2)} €` : "Precio pendiente"}</div>
           <p className="desc">{product.description}</p>
-          <button className="btn" disabled={outOfStock} onClick={handleAdd}>
-            {outOfStock ? "Agotado" : "Añadir al carrito"}
+          <button className="btn" disabled={disabled} onClick={handleAdd}>
+            {outOfStock ? "Agotado" : hasPrice ? "Añadir al carrito" : "Precio pendiente"}
           </button>
           <p className="stock-note">
             {outOfStock

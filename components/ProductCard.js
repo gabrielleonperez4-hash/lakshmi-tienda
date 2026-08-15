@@ -4,7 +4,9 @@ import ProductIcon from "./ProductIcon";
 
 export default function ProductCard({ product }) {
   const { addItem } = useCart();
+  const hasPrice = typeof product.price === "number";
   const outOfStock = product.stock === 0;
+  const disabled = outOfStock || !hasPrice;
 
   return (
     <div className="card">
@@ -23,14 +25,14 @@ export default function ProductCard({ product }) {
           <h3 className="card-title">{product.name}</h3>
         </Link>
         <div className="card-price">
-          <span>{product.price.toFixed(2)} €</span>
+          <span>{hasPrice ? `${product.price.toFixed(2)} €` : "Precio pendiente"}</span>
           <button
             className="mini-btn"
-            disabled={outOfStock}
+            disabled={disabled}
             onClick={() => addItem(product, 1)}
-            style={outOfStock ? { opacity: 0.4, cursor: "not-allowed" } : undefined}
+            style={disabled ? { opacity: 0.4, cursor: "not-allowed" } : undefined}
           >
-            {outOfStock ? "Agotado" : "Añadir"}
+            {outOfStock ? "Agotado" : hasPrice ? "Añadir" : "—"}
           </button>
         </div>
       </div>

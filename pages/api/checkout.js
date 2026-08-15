@@ -40,6 +40,9 @@ export default async function handler(req, res) {
     const line_items = items.map((item) => {
       const product = products.find((p) => p.id === item.id);
       if (!product) throw new Error(`Producto no encontrado: ${item.id}`);
+      if (typeof product.price !== "number") {
+        throw new Error(`El producto "${product.name}" todavía no tiene precio definido`);
+      }
       const qty = Math.max(1, parseInt(item.qty, 10) || 1);
       return {
         quantity: qty,
