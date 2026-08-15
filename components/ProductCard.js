@@ -10,7 +10,11 @@ export default function ProductCard({ product }) {
     <div className="card">
       <Link href={`/producto/${product.slug}`}>
         <div className="card-img">
-          <ProductIcon icon={product.icon} className="product-icon" />
+          {product.image ? (
+            <img src={product.image} alt={product.name} loading="lazy" />
+          ) : (
+            <ProductIcon icon={product.icon} className="product-icon" />
+          )}
         </div>
       </Link>
       <div className="card-body">

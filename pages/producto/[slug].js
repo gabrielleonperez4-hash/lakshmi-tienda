@@ -35,7 +35,15 @@ export default function ProductPage({ product }) {
       </Head>
       <div className="container pd">
         <div className="pd-img">
-          <ProductIcon icon={product.icon} className="product-icon" />
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.name}
+              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 6 }}
+            />
+          ) : (
+            <ProductIcon icon={product.icon} className="product-icon" />
+          )}
         </div>
         <div>
           <span className="card-origin">{product.origin}</span>

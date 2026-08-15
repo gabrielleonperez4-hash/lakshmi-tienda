@@ -1,6 +1,19 @@
 import Stripe from "stripe";
 import { getProductBySlug, products } from "../../lib/products";
 
+// ============================================================
+// GASTOS DE ENVÍO — edita estos valores según lo que necesites.
+// "amount" va en céntimos: 495 = 4,95 €. "minDays"/"maxDays" son
+// días hábiles estimados de entrega.
+// ============================================================
+const SHIPPING = {
+  amount: 495, // 4,95 €
+  label: "Envío a Canarias",
+  minDays: 3,
+  maxDays: 5,
+};
+// ============================================================
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -55,11 +68,11 @@ export default async function handler(req, res) {
         {
           shipping_rate_data: {
             type: "fixed_amount",
-            fixed_amount: { amount: 495, currency: "eur" },
-            display_name: "Envío a Canarias (3-5 días)",
+            fixed_amount: { amount: SHIPPING.amount, currency: "eur" },
+            display_name: `${SHIPPING.label} (${SHIPPING.minDays}-${SHIPPING.maxDays} días)`,
             delivery_estimate: {
-              minimum: { unit: "business_day", value: 3 },
-              maximum: { unit: "business_day", value: 5 },
+              minimum: { unit: "business_day", value: SHIPPING.minDays },
+              maximum: { unit: "business_day", value: SHIPPING.maxDays },
             },
           },
         },
