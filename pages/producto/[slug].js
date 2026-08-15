@@ -1,0 +1,57 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { products, getProductBySlug } from "../../lib/products";
+import { useCart } from "../../context/CartContext";
+import ProductIcon from "../../components/ProductIcon";
+
+export async function getStaticPaths() {
+  return {
+    paths: products.map((p) => ({ params: { slug: p.slug } })),
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const product = getProductBySlug(params.slug);
+  if (!product) return { notFound: true };
+  return { props: { product } };
+}
+
+export default function ProductPage({ product }) {
+  const { addItem } = useCart();
+  const router = useRouter();
+  const outOfStock = product.stock === 0;
+
+  function handleAdd() {
+    addItem(product, 1);
+    router.push("/carrito");
+  }
+
+  return (
+    <>
+      <Head>
+        <title>{product.name} — Lakshmi</title>
+        <meta name="description" content={product.description} />
+      </Head>
+      <div className="container pd">
+        <div className="pd-img">
+          <ProductIcon icon={product.icon} className="product-icon" />
+        </div>
+        <div>
+          <span className="card-origin">{product.origin}</span>
+          <h1>{product.name}</h1>
+          <div className="price">{product.price.toFixed(2)} €</div>
+          <p className="desc">{product.description}</p>
+          <button className="btn" disabled={outOfStock} onClick={handleAdd}>
+            {outOfStock ? "Agotado" : "Añadir al carrito"}
+          </button>
+          <p className="stock-note">
+            {outOfStock
+              ? "Sin stock actualmente."
+              : `${product.stock} unidades disponibles · Envíos a toda Canarias`}
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}

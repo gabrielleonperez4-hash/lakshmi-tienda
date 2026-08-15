@@ -1,0 +1,87 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { products } from "../lib/products";
+import ProductCard from "../components/ProductCard";
+import ProductIcon from "../components/ProductIcon";
+
+const categories = [...new Set(products.map((p) => p.category))];
+
+export default function Home() {
+  const router = useRouter();
+  const activeCategory = typeof router.query.categoria === "string" ? router.query.categoria : null;
+  const visibleProducts = activeCategory
+    ? products.filter((p) => p.category === activeCategory)
+    : products;
+
+  return (
+    <>
+      <Head>
+        <title>Lakshmi — Productos de India y Tailandia | Envíos a Canarias</title>
+        <meta
+          name="description"
+          content="Inciensos, cuencos tibetanos y decoración de India y Tailandia. Tienda en C.C. Atlántico, Vecindario. Envíos a toda Canarias."
+        />
+      </Head>
+
+      <section className="hero">
+        <div className="container hero-inner">
+          <div>
+            <span className="eyebrow">C.C. Atlántico · Vecindario · Local K1</span>
+            <h1>
+              El aroma de India y Tailandia,<br />
+              <em>ahora en toda Canarias</em>
+            </h1>
+            <p>
+              Inciensos artesanales, cuencos tibetanos y piezas de decoración
+              traídas con cuidado desde India y Tailandia. Compra online y
+              recibe tu pedido en cualquier isla.
+            </p>
+            <a href="#catalogo" className="btn">
+              Ver catálogo
+            </a>
+          </div>
+          <div className="hero-art">
+            <ProductIcon icon="mala" className="product-icon" />
+            <div className="cap">Ilustración de bienvenida — sustituir por foto real de la tienda</div>
+          </div>
+        </div>
+      </section>
+
+      <div className="mala-divider" aria-hidden="true">
+        {Array.from({ length: 35 }).map((_, i) => (
+          <span key={i} />
+        ))}
+      </div>
+
+      <section className="section container" id="catalogo">
+        <div className="section-head">
+          <div>
+            <h2>{activeCategory ? activeCategory : "Catálogo"}</h2>
+            <p>Piezas seleccionadas, disponibles para envío inmediato.</p>
+          </div>
+        </div>
+
+        <div className="chip-row">
+          <a href="/#catalogo" className={`chip ${!activeCategory ? "chip-active" : ""}`}>
+            Todo
+          </a>
+          {categories.map((cat) => (
+            <a
+              key={cat}
+              href={`/?categoria=${encodeURIComponent(cat)}#catalogo`}
+              className={`chip ${activeCategory === cat ? "chip-active" : ""}`}
+            >
+              {cat}
+            </a>
+          ))}
+        </div>
+
+        <div className="grid">
+          {visibleProducts.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
