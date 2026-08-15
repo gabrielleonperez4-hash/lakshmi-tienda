@@ -25,7 +25,7 @@ export default function Header() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}
           >
-            <span className="menu-icon">☰</span> Familias
+            <span className="menu-icon">☰</span> Menú
           </button>
           {menuOpen && (
             <>
@@ -56,6 +56,9 @@ export default function Header() {
           <Link href="/#catalogo">Catálogo</Link>
           <Link href="/#contacto">Contacto</Link>
           <Link href="/carrito" className="cart-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 3h2l.4 2M7 13h10l3-8H5.4M7 13L5.4 5M7 13l-1.5 5h11.5M9 21a1 1 0 100-2 1 1 0 000 2zM18 21a1 1 0 100-2 1 1 0 000 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
             Carrito {count > 0 ? `(${count})` : ""}
           </Link>
         </nav>
