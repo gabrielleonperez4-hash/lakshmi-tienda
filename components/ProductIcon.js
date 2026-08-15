@@ -87,6 +87,14 @@ const paths = {
       <line x1="67" y1="50" x2="67" y2="70" stroke="var(--indigo)" strokeWidth="1.2" opacity=".4" />
     </>
   ),
+  jewelry: (
+    <>
+      <path d="M40 26c10-8 30-8 40 0" stroke="var(--brass)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <path d="M40 26c-4 14 2 24 8 30M80 26c4 14-2 24-8 30" stroke="var(--brass)" strokeWidth="2" fill="none" opacity=".6" strokeLinecap="round" />
+      <circle cx="60" cy="66" r="16" fill="var(--marigold)" fillOpacity=".22" stroke="var(--brass)" strokeWidth="2.5" />
+      <circle cx="60" cy="66" r="5" fill="var(--indigo)" />
+    </>
+  ),
 };
 
 export default function ProductIcon({ icon, className }) {
