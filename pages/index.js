@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { products } from "../lib/products";
 import ProductCard from "../components/ProductCard";
-import ProductIcon from "../components/ProductIcon";
+import HeroCarousel from "../components/HeroCarousel";
 
 const categories = [...new Set(products.map((p) => p.category))];
 
@@ -23,29 +23,7 @@ export default function Home() {
         />
       </Head>
 
-      <section className="hero">
-        <div className="container hero-inner">
-          <div>
-            <span className="eyebrow">Lo más vendido</span>
-            <h1>
-              Los favoritos de siempre,<br />
-              <em>los que nunca fallan</em>
-            </h1>
-            <p>
-              Cuencos tibetanos, budas y bisutería esotérica que nuestros
-              clientes vuelven a pedir una y otra vez. Compra online y
-              recibe tu pedido en cualquier isla de Canarias.
-            </p>
-            <a href="#catalogo" className="btn">
-              Ver catálogo
-            </a>
-          </div>
-          <div className="hero-art">
-            <ProductIcon icon="mala" className="product-icon" />
-            <div className="cap">Ilustración de bienvenida — sustituir por foto real de la tienda</div>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel />
 
       <div className="mala-divider" aria-hidden="true">
         {Array.from({ length: 35 }).map((_, i) => (
