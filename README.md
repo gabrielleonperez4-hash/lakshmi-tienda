@@ -50,6 +50,40 @@ Abre http://localhost:3000
 
 Con esto la tienda queda **online y cobrando de verdad** con tarjeta.
 
+### 5. Recibir un email por cada pedido (productos + dirección de envío)
+
+Por defecto Stripe solo manda un aviso básico (importe y ya). Para recibir
+un email con el pedido completo (qué productos, cantidades y a qué
+dirección hay que enviarlo), hay que activar 2 cosas:
+
+**A) Crear cuenta gratis en Resend (envía los emails)**
+1. Entra en https://resend.com y crea una cuenta gratuita con tu email de
+   la tienda (hasta 3.000 emails/mes gratis).
+2. Ve a "API Keys" → "Create API Key" y copia la clave (empieza por `re_`).
+3. **Importante**: con el plan gratis, sin verificar un dominio propio,
+   Resend solo permite enviar a la MISMA dirección de email con la que
+   creaste la cuenta. Así que usa el email de la tienda tanto para crear
+   la cuenta de Resend como para la variable `STORE_OWNER_EMAIL` de abajo.
+
+**B) Registrar el webhook en Stripe (avisa cuando se completa un pago)**
+1. En el dashboard de Stripe → Desarrolladores → Webhooks → "Añadir
+   endpoint".
+2. URL del endpoint: `https://TU-DOMINIO.vercel.app/api/webhook` (cambia
+   por tu URL real de Vercel).
+3. Evento a escuchar: `checkout.session.completed`.
+4. Guarda y copia el "Signing secret" que te muestra (empieza por
+   `whsec_`).
+
+**C) Añadir las 3 variables nuevas en Vercel**
+En Vercel → tu proyecto → Settings → Environment Variables, añade:
+- `STRIPE_WEBHOOK_SECRET` → el `whsec_...` del paso B
+- `RESEND_API_KEY` → el `re_...` del paso A
+- `STORE_OWNER_EMAIL` → el email donde quieres recibir los pedidos
+
+Después de añadirlas, haz un "Redeploy" del proyecto en Vercel para que
+se apliquen. A partir de ahí, cada pedido pagado te llegará por email con
+el detalle completo.
+
 ## Cómo poner los productos reales
 Edita `lib/products.js`. Cada producto es un bloque como este:
 
