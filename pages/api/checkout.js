@@ -5,12 +5,15 @@ import { getProductBySlug, products } from "../../lib/products";
 // GASTOS DE ENVÍO — edita estos valores según lo que necesites.
 // "amount" va en céntimos: 495 = 4,95 €. "minDays"/"maxDays" son
 // días hábiles estimados de entrega.
+// "freeShippingThreshold": importe en euros a partir del cual el envío
+// es gratis. Pon "null" si no quieres envío gratis por importe mínimo.
 // ============================================================
 const SHIPPING = {
   amount: 495, // 4,95 €
   label: "Envío a Canarias",
   minDays: 3,
   maxDays: 5,
+  freeShippingThreshold: 60, // envío gratis a partir de 60 €
 };
 // ============================================================
 
@@ -56,6 +59,18 @@ export default async function handler(req, res) {
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || `https://${req.headers.host}`;
 
+    // Calculamos el subtotal (sin envío) para saber si aplica envío gratis.
+    const subtotal = line_items.reduce(
+      (sum, li) => sum + (li.price_data.unit_amount * li.quantity) / 100,
+      0
+    );
+    const freeShipping =
+      SHIPPING.freeShippingThreshold !== null && subtotal >= SHIPPING.freeShippingThreshold;
+    const shippingAmount = freeShipping ? 0 : SHIPPING.amount;
+    const shippingLabel = freeShipping
+      ? `${SHIPPING.label} (gratis, pedido superior a ${SHIPPING.freeShippingThreshold} €)`
+      : `${SHIPPING.label} (${SHIPPING.minDays}-${SHIPPING.maxDays} días)`;
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items,
@@ -71,8 +86,8 @@ export default async function handler(req, res) {
         {
           shipping_rate_data: {
             type: "fixed_amount",
-            fixed_amount: { amount: SHIPPING.amount, currency: "eur" },
-            display_name: `${SHIPPING.label} (${SHIPPING.minDays}-${SHIPPING.maxDays} días)`,
+            fixed_amount: { amount: shippingAmount, currency: "eur" },
+            display_name: shippingLabel,
             delivery_estimate: {
               minimum: { unit: "business_day", value: SHIPPING.minDays },
               maximum: { unit: "business_day", value: SHIPPING.maxDays },

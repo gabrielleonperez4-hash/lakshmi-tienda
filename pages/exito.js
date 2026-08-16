@@ -5,12 +5,13 @@ import { useCart } from "../context/CartContext";
 
 export default function Success() {
   const router = useRouter();
-  const { clearCart } = useCart();
+  const { clearCart, loaded } = useCart();
 
   useEffect(() => {
+    if (!loaded) return;
     clearCart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loaded]);
 
   return (
     <>
