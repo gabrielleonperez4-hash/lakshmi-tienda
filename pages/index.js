@@ -26,15 +26,15 @@ export default function Home() {
       <section className="hero">
         <div className="container hero-inner">
           <div>
-            <span className="eyebrow">C.C. Atlántico · Vecindario · Local K1</span>
+            <span className="eyebrow">Lo más vendido</span>
             <h1>
-              El aroma de India y Tailandia,<br />
-              <em>ahora en toda Canarias</em>
+              Los favoritos de siempre,<br />
+              <em>los que nunca fallan</em>
             </h1>
             <p>
-              Inciensos artesanales, cuencos tibetanos y piezas de decoración
-              traídas con cuidado desde India y Tailandia. Compra online y
-              recibe tu pedido en cualquier isla.
+              Cuencos tibetanos, budas y bisutería esotérica que nuestros
+              clientes vuelven a pedir una y otra vez. Compra online y
+              recibe tu pedido en cualquier isla de Canarias.
             </p>
             <a href="#catalogo" className="btn">
               Ver catálogo
