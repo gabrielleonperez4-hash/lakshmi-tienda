@@ -4,8 +4,6 @@ import { products } from "../lib/products";
 import ProductCard from "../components/ProductCard";
 import HeroCarousel from "../components/HeroCarousel";
 
-const categories = [...new Set(products.map((p) => p.category))];
-
 export default function Home() {
   const router = useRouter();
   const activeCategory = typeof router.query.categoria === "string" ? router.query.categoria : null;
@@ -37,21 +35,6 @@ export default function Home() {
             <h2>{activeCategory ? activeCategory : "Catálogo"}</h2>
             <p>Piezas seleccionadas, disponibles para envío inmediato.</p>
           </div>
-        </div>
-
-        <div className="chip-row">
-          <a href="/#catalogo" className={`chip ${!activeCategory ? "chip-active" : ""}`}>
-            Todo
-          </a>
-          {categories.map((cat) => (
-            <a
-              key={cat}
-              href={`/?categoria=${encodeURIComponent(cat)}#catalogo`}
-              className={`chip ${activeCategory === cat ? "chip-active" : ""}`}
-            >
-              {cat}
-            </a>
-          ))}
         </div>
 
         <div className="grid">
